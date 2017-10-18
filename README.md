@@ -1,4 +1,4 @@
-﻿﻿## Advanced Lane Finding
+## Advanced Lane Finding
 <p align='center'>
 <img src="https://github.com/wiwawo/CarND-Advanced-Lane-Finding/blob/master/output_images/ZoneBetweenLinesBig.png" width="480" alt="lane lines" />
 </p>
@@ -65,6 +65,10 @@ Combining Sobel transformations with the saturation channel from HLS can potenti
 <p align='center'>
 <img src="https://github.com/wiwawo/CarND-Advanced-Lane-Finding/blob/master/output_images/StackedThresholds.jpg" width="480" alt="lane lines" />
 </p>
+The combination of Sobel and the saturation channel HLS doesn't look highlight lanes much (probably I didn't find optimum parameters), so I used combination of three masks, that were created by using Sobel function, mask for pixels close to white in color (represent colors of white lines) and mask for yellow colors (represent yellow lines on the road). The result is here:
+<p align='center'>
+<img src="https://github.com/wiwawo/CarND-Advanced-Lane-Finding/blob/master/output_images/YellowWhiteSobel.jpg" width="480" alt="lane lines" />
+</p>
 After transforming image to the bird-eye view and fitting 2nd order polynomial to the lanes, following was achieved:
 <p align='center'>
 <img src="https://github.com/wiwawo/CarND-Advanced-Lane-Finding/blob/master/output_images/unwarped image.jpg" width="480" alt="lane lines" />
@@ -76,6 +80,10 @@ Here is more pictures with more details, how similar found polynomial are to the
 After combining results from all the steps from above, it was possible to select lane area (green on the following images), where car can drive. Of course, the warping of the detected lane boundaries back onto the original image was done:
 <p align='center'>
 <img src="https://github.com/wiwawo/CarND-Advanced-Lane-Finding/blob/master/output_images/ZoneBetweenLanes.jpg" width="480" alt="lane lines" />
+</p>
+After applying steps from above and combining it with calc_curvature() function (it calculates curvatures for left and right lanes), following result was achieved:
+<p align='center'>
+<img src="https://github.com/wiwawo/CarND-Advanced-Lane-Finding/blob/master/output_images/ZoneBetweenLinesBig.png" width="480" alt="lane lines" />
 </p>
 Curvatures of left and right lanes and car deviation from the middle point between lanes for 8 test images are:
 
@@ -89,7 +97,7 @@ Curvatures of left and right lanes and car deviation from the middle point betwe
     596.257467939 m 769.784082996 m 0.162777691917 m
 These values seems to close to real values.
 
-Having pipeline, that works on the individual frames, it was not difficult to apply the pipeline on individual frames of videos. The pipeline did work well only on project_video.mp4.
+Having pipeline, that works on the individual frames, it was not difficult to apply the pipeline on individual frames of videos. The pipeline did work well the example project video. The "green drivable area" is not always perfectly fits the lanes, because the chosen pipeline takes in account not only current video frame, but some of the previous frames. Analysis of several video frames helps to filter out some of spikes in values of calculated polylines coefficients (it can happen due to e.g. snow on the road etc.). Sideeffects of such approach, that some delay can happen, before the pipeline "catches up" with the lanes on the road. There is no danger for passengers of a car, because the curvature of the road/lanes is limited by official standards and guidelines (not like for rally tracks) and the pipeline has some time to find the lost lanes. 
 
 #### Possible improvements
 
