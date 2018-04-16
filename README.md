@@ -1,6 +1,6 @@
 ## Advanced Lane Finding
 <p align='center'>
-<img src="https://github.com/wiwawo/CarND-Advanced-Lane-Finding/blob/master/output_images/ZoneBetweenLinesBig.png" width="480" alt="lane lines" />
+<img src="https://github.com/wiwawo/CarND-Advanced-Lane-Finding/blob/master/output_images/advanced_lanes_anime.gif" width="480" alt="lane lines" />
 </p>
 
 In this project, the goal is to write a software pipeline to identify the lane boundaries in a video.
